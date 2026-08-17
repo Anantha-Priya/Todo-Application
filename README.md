@@ -40,6 +40,7 @@ The application provides user authentication and allows users to create, view, u
 
 ## Project Structure
 
+```text
 Todo Application
 ├── Backend
 │   ├── src
@@ -55,4 +56,5 @@ Todo Application
 │
 ├── .gitignore
 └── README.md
+```
 
