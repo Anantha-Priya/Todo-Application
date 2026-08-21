@@ -62,20 +62,37 @@ function createTodoCard(todo) {
         updateTodoStatus(updatedTodo);
     });
 
-    const span=document.createElement("span");
-    span.textContent=todo.title;
+    const todoContent=document.createElement("div");
+    todoContent.className="todo-content";
+
+    const title=document.createElement("span");
+    title.className="todo-title";
+    title.textContent=todo.title;
+
+    const description=document.createElement("p");
+    description.className="todo-description";
+    description.textContent=todo.description || "No description";
+
+    todoContent.appendChild(title);
+    todoContent.appendChild(description);
 
     if(todo.isCompleted){
-        span.style.textDecoration="line=through";
-        span.style.color="#aaa";
+        title.style.textDecoration="line-through";
+        title.style.color="#aaa";
     }
 
     const deleteBtn=document.createElement("button");
     deleteBtn.textContent="X";
     deleteBtn.onclick=function() {deleteTodo(todo.id);};
 
+    const editBtn=document.createElement("button");
+    editBtn.className="edit-button";
+    editBtn.textContent="Edit";
+    editBtn.onclick=function() {editTodo(todo, card);};
+
     card.appendChild(checkbox);
-    card.appendChild(span);
+    card.appendChild(todoContent);
+    card.appendChild(editBtn);
     card.appendChild(deleteBtn);
 
     return card;
@@ -121,8 +138,10 @@ function loadTodos() {
 }
 
 function addTodo() {
-    const input=document.getElementById("new-todo");
-    const todoText=input.value.trim();
+    const titleInput=document.getElementById("new-todo");
+    const descriptionInput=document.getElementById("new-description");
+    const todoText=titleInput.value.trim();
+    const description=descriptionInput.value.trim();
 
     if(!todoText) return;
 
@@ -132,7 +151,7 @@ function addTodo() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({title: todoText, isCompleted:false})
+        body: JSON.stringify({title: todoText, description, isCompleted:false})
        
     })
     .then(response => {
@@ -142,7 +161,8 @@ function addTodo() {
         return response.json();
     })
     .then((newTodo) => {
-        input.value="";
+        titleInput.value="";
+        descriptionInput.value="";
         loadTodos();
     })
     .catch(error => {
@@ -151,6 +171,10 @@ function addTodo() {
 }
 
 function updateTodoStatus(todo) {
+    updateTodo(todo);
+}
+
+function updateTodo(todo) {
     fetch(`${SERVER_URL}/todo`, {
         method: "PUT",
         headers: {
@@ -170,6 +194,51 @@ function updateTodoStatus(todo) {
     .catch(error => {
         alert(error.message);
     })
+}
+
+function editTodo(todo, card) {
+    card.classList.add("editing");
+    card.innerHTML="";
+
+    const editFields=document.createElement("div");
+    editFields.className="edit-fields";
+
+    const titleInput=document.createElement("input");
+    titleInput.type="text";
+    titleInput.value=todo.title || "";
+    titleInput.setAttribute("aria-label", "Todo title");
+
+    const descriptionInput=document.createElement("textarea");
+    descriptionInput.value=todo.description || "";
+    descriptionInput.setAttribute("aria-label", "Todo description");
+
+    const editActions=document.createElement("div");
+    editActions.className="edit-actions";
+
+    const cancelBtn=document.createElement("button");
+    cancelBtn.className="cancel-button";
+    cancelBtn.textContent="Cancel";
+    cancelBtn.onclick=function() {loadTodos();};
+
+    const saveBtn=document.createElement("button");
+    saveBtn.className="save-button";
+    saveBtn.textContent="Save";
+    saveBtn.onclick=function() {
+        const title=titleInput.value.trim();
+        if(!title){
+            alert("Please enter a todo title");
+            return;
+        }
+        updateTodo({...todo, title, description: descriptionInput.value.trim()});
+    };
+
+    editFields.appendChild(titleInput);
+    editFields.appendChild(descriptionInput);
+    editActions.appendChild(cancelBtn);
+    editActions.appendChild(saveBtn);
+    card.appendChild(editFields);
+    card.appendChild(editActions);
+    titleInput.focus();
 }
 
 function deleteTodo(id) {

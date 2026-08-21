@@ -1,6 +1,7 @@
 package com.priya.Helloworld.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,5 +19,7 @@ public class Todo {
     @NotBlank
     @Schema(name="title",example="Complete Spring boot")
     String title;
+    @Column(name = "description")
+    String description;
     Boolean isCompleted;
 }

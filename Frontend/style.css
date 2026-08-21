@@ -64,7 +64,8 @@ body {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+textarea {
     padding: 0.6rem 1rem;
     border: 2px solid #1976d2;
     border-radius: 8px;
@@ -72,6 +73,12 @@ input[type="password"] {
     outline: none;
     margin-bottom: 0.5rem;
     width: 100%;
+}
+
+textarea {
+    min-height: 76px;
+    resize: vertical;
+    font-family: inherit;
 }
 
 /* All buttons (login, register, add, delete) */
@@ -111,10 +118,24 @@ button:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
 }
 
-.todo-card span {
+.todo-content {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.todo-card .todo-title {
+    display: block;
     font-size: 1rem;
     color: #333;
-    flex-grow: 1;
+    font-weight: 600;
+}
+
+.todo-description {
+    margin-top: 0.25rem;
+    color: #70788a;
+    font-size: 0.86rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
 }
 
 .todo-card button {
@@ -134,14 +155,112 @@ button:hover {
     background: #d93636;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sign-in-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid #1976d2;
+    border-radius: 8px;
+    color: #1976d2;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.sign-in-link:hover {
+    background: #eaf4ff;
+}
+
+.todo-card .edit-button,
+.edit-actions .save-button,
+.edit-actions .cancel-button {
+    width: auto;
+    margin: 0;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+}
+
+.todo-card .edit-button {
+    background: #eaf4ff;
+    color: #1976d2;
+}
+
+.todo-card .edit-button:hover,
+.edit-actions .save-button:hover {
+    background: #125ea7;
+    color: white;
+}
+
+.todo-card.editing {
+    display: block;
+    background: #f8fbff;
+}
+
+.edit-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.edit-fields input,
+.edit-fields textarea {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid #a9cff5;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.edit-fields textarea {
+    min-height: 68px;
+    resize: vertical;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.7rem;
+}
+
+.edit-actions .save-button {
+    background: #1976d2;
+}
+
+.edit-actions .cancel-button {
+    background: #e9edf2;
+    color: #46505c;
+}
+
+.edit-actions .cancel-button:hover {
+    background: #d9dfe6;
+}
+
 .add-todo {
     display: flex;
     gap: 0.5rem;
     margin-top: 1.5rem;
+    align-items: stretch;
 }
 
-.add-todo input {
+.todo-fields {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.todo-fields input,
+.todo-fields textarea {
+    width: 100%;
     padding: 0.6rem 1rem;
     border: 2px solid #1976d2;
     border-radius: 8px;
@@ -155,6 +274,10 @@ button:hover {
     margin-bottom: auto;
     border-radius: 8px;
     white-space: nowrap;
+}
+
+.todo-card:has(input[type="checkbox"]:checked) .todo-description {
+    color: #aaa;
 }
 
 

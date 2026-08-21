@@ -6,21 +6,21 @@
     <title>Login</title>
     <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-<div class="container">
-    <h2>Login</h2>
-
+<body class="auth-page">
+<main class="container auth-card">
+    <div class="brand-mark" aria-hidden="true">✓</div>
+    <p class="eyebrow">WELCOME BACK</p>
+    <h2>Ready to make progress?</h2>
+    <p class="intro">Sign in to keep your day beautifully organized.</p>
     <div class="form-group">
-        <input type="email" id="email" placeholder="Email" />
-        <input type="password" id="password" placeholder="Password" />
+        <label for="email">Email address</label>
+        <input type="email" id="email" placeholder="you@example.com" />
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" />
     </div>
-
-    <button onclick="login()">Login</button>
-
-    <p style="text-align: center; margin-top: 1rem;">
-        Don't have an account? <a href="register.html">Register here</a>
-    </p>
-</div>
+    <button class="primary-button" onclick="login()">Sign in <span aria-hidden="true">→</span></button>
+    <p class="auth-footer">New here? <a href="register.html">Create an account</a></p>
+</main>
 
 <script src="script.js"></script>
 </body>

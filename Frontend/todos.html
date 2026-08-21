@@ -8,19 +8,31 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
-    <div class="container">
-        <h2>Your Todos</h2>
-
-        <div id="todo-list" class="todo-cards">
+<body class="todo-page">
+    <main class="container todo-shell">
+        <header class="todo-header">
+            <div>
+                <p class="eyebrow">YOUR FOCUS LIST</p>
+                <h2>Today's tasks</h2>
+                <p class="intro">Small steps add up to meaningful progress.</p>
+            </div>
+            <div class="header-actions">
+                <a class="sign-in-link" href="login.html">Sign in</a>
+                <div class="header-mark" aria-hidden="true">✓</div>
+            </div>
+        </header>
+        <div id="todo-list" class="todo-cards" aria-live="polite">
             <p id="empty-message">Loading your todos...</p>
         </div>
 
         <div class="add-todo">
-            <input type="text" id="new-todo" placeholder="Add new todo" />
-            <button onclick="addTodo()">Add</button>
+            <div class="todo-fields">
+                <input type="text" id="new-todo" placeholder="Todo title" aria-label="Todo title" />
+                <textarea id="new-description" placeholder="Description (optional)" aria-label="Todo description"></textarea>
+            </div>
+            <button onclick="addTodo()"><span aria-hidden="true">+</span> Add task</button>
         </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 
