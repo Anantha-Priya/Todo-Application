@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
+    // JwtFilter sets the authenticated user's email as the principal name
+    private String currentUserEmail() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
     //Path Variable
     @ApiResponses({
             @ApiResponse(responseCode="200",description="Todo Executed Successfully!"),
@@ -28,7 +34,7 @@ public class TodoController {
     @GetMapping("/{id}")           //Retrieve single element by Id
     ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
         try{
-            Todo createdTodo=todoService.getTodoById(id);
+            Todo createdTodo=todoService.getTodoById(id, currentUserEmail());
             return new ResponseEntity<>(createdTodo,HttpStatus.OK);
         }catch(RuntimeException exception){
             log.info("Error");
@@ -42,27 +48,36 @@ public class TodoController {
     //Request Body
     @PostMapping("/create")      // Insert Element
     ResponseEntity<Todo> createUser(@RequestBody Todo todo) {
-       return new ResponseEntity<>(todoService.createTodo(todo), HttpStatus.CREATED) ;
+       return new ResponseEntity<>(todoService.createTodo(todo, currentUserEmail()), HttpStatus.CREATED) ;
 
     }
 
     @GetMapping("/page")        // Retrieve elements by Sequential pages
     ResponseEntity<Page<Todo>> getTodoPaged(@RequestParam int page,@RequestParam int size){
-        return new ResponseEntity<>(todoService.getAllTodosPages(page,size), HttpStatus.OK);
+        return new ResponseEntity<>(todoService.getAllTodosPages(page,size, currentUserEmail()), HttpStatus.OK);
     }
 
-    @GetMapping                // Retrieve single element by Id
+    @GetMapping                // Retrieve todos belonging to the logged-in user
     ResponseEntity<List<Todo>> getTodos(){
-        return new ResponseEntity<List<Todo>>(todoService.getTodos(),HttpStatus.OK);
+        return new ResponseEntity<List<Todo>>(todoService.getTodos(currentUserEmail()),HttpStatus.OK);
     }
 
     @PutMapping
     ResponseEntity<Todo> updateTodoById( @RequestBody Todo todo ) {
-        return new ResponseEntity<>(todoService.updateTodo(todo),HttpStatus.OK);
+        try{
+            return new ResponseEntity<>(todoService.updateTodo(todo, currentUserEmail()),HttpStatus.OK);
+        }catch(RuntimeException exception){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    void deleteTodoById(@PathVariable Long id) {
-        todoService.deleteTodoById(id);
+    ResponseEntity<Void> deleteTodoById(@PathVariable Long id) {
+        try{
+            todoService.deleteTodoById(id, currentUserEmail());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(RuntimeException exception){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

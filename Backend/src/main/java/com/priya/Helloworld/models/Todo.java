@@ -19,4 +19,5 @@ public class Todo {
     @Schema(name="title",example="Complete Spring boot")
     String title;
     Boolean isCompleted;
+    String ownerEmail;
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 public class JwtUtil {
     //used to generate JWT token and validates it
     private final String SECRET="Like, Share and Subscribe to Code io - Tamil, Download IDK, Our simple and easy to use IDE";
-    private final long EXPIRATION = 1000*60;
+    private final long EXPIRATION = 1000L*60*60*24; // 24 hours
     private final Key secretKey= Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
     public String generateToken(String email){
