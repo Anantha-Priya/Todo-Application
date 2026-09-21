@@ -3,17 +3,50 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Register</title>
+    <title>Register · TaskFlow</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <div class="container">
-    <h2>Register</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="register()">Register</button>
+    <div class="brand">
+        <div class="brand-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6L9 17l-5-5" />
+            </svg>
+        </div>
+        <h1>TaskFlow</h1>
+    </div>
+
+    <h2>Create your account</h2>
+    <p class="subtitle">Start organizing your tasks in minutes</p>
+
+    <div class="form-group">
+        <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 6l-10 7L2 6"/>
+                <path d="M2 6h20v12H2z"/>
+            </svg>
+            <input type="email" id="email" placeholder="Email" autocomplete="email" />
+        </div>
+        <div class="input-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="11" width="14" height="9" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+            </svg>
+            <input type="password" id="password" placeholder="Password" autocomplete="new-password" />
+            <svg class="toggle-password" data-target="password" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        </div>
+    </div>
+
+    <button id="register-btn" onclick="register()">Register</button>
+
     <p>Already have an account? <a href="login.html">Login here</a></p>
 </div>
+
+<div id="toast-container"></div>
 
 <script src="script.js"></script>
 </body>

@@ -4,23 +4,72 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Todos</title>
+    <title>Your Todos · TaskFlow</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <div class="container">
-        <h2>Your Todos</h2>
-
-        <div id="todo-list" class="todo-cards">
-            <p id="empty-message">Loading your todos...</p>
+    <div class="app-shell">
+        <div class="topbar">
+            <div class="brand-inline">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                </div>
+                <h1>TaskFlow</h1>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <path d="M16 17l5-5-5-5" />
+                    <path d="M21 12H9" />
+                </svg>
+                Logout
+            </button>
         </div>
 
-        <div class="add-todo">
-            <input type="text" id="new-todo" placeholder="Add new todo" />
-            <button onclick="addTodo()">Add</button>
+        <div class="todos-card">
+            <div class="progress-summary">
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span class="progress-text" id="progress-text">0 of 0 done</span>
+            </div>
+
+            <div class="add-todo">
+                <input type="text" id="new-todo" placeholder="What needs to be done?" />
+                <button onclick="addTodo()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Add
+                </button>
+            </div>
+
+            <div id="todo-list" class="todo-cards">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="pagination-controls" class="pagination-controls" hidden>
+                <button class="page-btn" id="prev-page" onclick="changePage(-1)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                    Prev
+                </button>
+                <span id="page-indicator" class="page-indicator">Page 1 of 1</span>
+                <button class="page-btn" id="next-page" onclick="changePage(1)">
+                    Next
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 6l6 6-6 6" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
+
+    <div id="toast-container"></div>
 
     <script src="script.js"></script>
 
