@@ -114,7 +114,7 @@ function logout() {
 }
 
 // ---------- Todos page logic ----------
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 4;
 let allTodos = [];
 let currentPage = 1;
 
